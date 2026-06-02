@@ -1,32 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #f2f2f2;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+
+    padding: 20px;
 }
 
 .container {
-    background: white;
-    width: 400px;
-    margin: auto;
-    padding: 30px;
-    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+
+    font-size: 2rem;
+    font-weight: 700;
+
+    color: #facc15;
+}
+
+.subtitle {
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    color: #f8fafc;
 }
 
 input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px;
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    color: white;
+
+    font-size: 15px;
+}
+
+input::placeholder {
+    color: #cbd5e1;
 }
 
 button {
-    background-color: gold;
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 10px;
+
     border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #facc15, #eab308);
+
+    color: #111827;
+
     font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
 }
 
 button:hover {
-    background-color: orange;
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 18px rgba(250, 204, 21, 0.4);
+}
+
+.result-box {
+    margin-top: 25px;
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    background: rgba(250, 204, 21, 0.15);
+
+    border: 1px solid rgba(250, 204, 21, 0.3);
+
+    color: #facc15;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+footer {
+    text-align: center;
+
+    margin-top: 30px;
+
+    font-size: 13px;
+
+    color: #cbd5e1;
+}
+
+@media(max-width: 600px) {
+    .container {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
 }

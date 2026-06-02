@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Gold Price Prediction</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -14,21 +20,45 @@
 
         <h1>Gold Price Prediction</h1>
 
+        <p class="subtitle">
+            Predict Gold Prices using Machine Learning & AWS Deployment
+        </p>
+
         <form action="/predict" method="POST">
 
-            <input type="text" name="SPX" placeholder="Enter SPX" required>
+            <div class="input-group">
+                <label>SPX Value</label>
+                <input type="text" name="SPX" placeholder="Enter SPX value" required>
+            </div>
 
-            <input type="text" name="USO" placeholder="Enter USO" required>
+            <div class="input-group">
+                <label>USO Value</label>
+                <input type="text" name="USO" placeholder="Enter USO value" required>
+            </div>
 
-            <input type="text" name="SLV" placeholder="Enter SLV" required>
+            <div class="input-group">
+                <label>SLV Value</label>
+                <input type="text" name="SLV" placeholder="Enter SLV value" required>
+            </div>
 
-            <input type="text" name="EURUSD" placeholder="Enter EUR/USD" required>
+            <div class="input-group">
+                <label>EUR/USD Value</label>
+                <input type="text" name="EURUSD" placeholder="Enter EUR/USD value" required>
+            </div>
 
-            <button type="submit">Predict</button>
+            <button type="submit">Predict Gold Price</button>
 
         </form>
 
-        <h2>{{ prediction_text }}</h2>
+        {% if prediction_text %}
+        <div class="result-box">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+
+        <footer>
+            Developed by Kushal Upadhyay
+        </footer>
 
     </div>
 
