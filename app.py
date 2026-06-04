@@ -13,7 +13,7 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 app = Flask(__name__)
 
 # ── Load your model ──────────────────────────────────────────────
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('model/model.pkl', 'rb'))
 
 # ── Load dataset to generate the graph ──────────────────────────
 # Replace 'gld_price_data.csv' with your actual CSV file name
