@@ -1,67 +1,215 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gold Price Predictor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <title>Gold Price Prediction</title>
+    body {
+      background: #0f0f1a;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    /* ── Navbar ── */
+    .navbar {
+      background: #16213e;
+      padding: 16px 40px;
+      border-bottom: 1px solid #2a2a4a;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .navbar h1 { font-size: 20px; font-weight: 600; color: #ffd700; }
+    .navbar span { font-size: 13px; color: #888; }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    /* ── Main layout ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+    /* ── Metric cards ── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    .metric-card {
+      background: #16213e;
+      border: 1px solid #2a2a4a;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .metric-card .label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+    .metric-card .value { font-size: 32px; font-weight: 700; margin: 8px 0 4px; }
+    .metric-card .sublabel { font-size: 11px; color: #666; }
+    .r2-val  { color: #00d4aa; }
+    .mae-val { color: #4e9af1; }
+    .mse-val { color: #ff6b6b; }
+
+    /* ── Predict form card ── */
+    .form-card {
+      background: #16213e;
+      border: 1px solid #2a2a4a;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 30px;
+    }
+    .form-card h2 { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: #fff; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2a2a4a;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #e0e0e0;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus { border-color: #ffd700; }
+
+    .predict-btn {
+      background: linear-gradient(135deg, #ffd700, #ff9900);
+      color: #0f0f1a;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .predict-btn:hover { opacity: 0.85; }
+
+    /* ── Result banner ── */
+    .result-banner {
+      background: linear-gradient(135deg, #16213e, #1a1a2e);
+      border: 1px solid #ffd700;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 30px;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .result-banner .result-label { font-size: 13px; color: #888; margin-bottom: 6px; }
+    .result-banner .result-value { font-size: 48px; font-weight: 700; color: #ffd700; }
+    .result-banner .result-sub   { font-size: 13px; color: #666; margin-top: 4px; }
+
+    /* ── Chart cards ── */
+    .chart-card {
+      background: #16213e;
+      border: 1px solid #2a2a4a;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .chart-card h2 { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #ccc; }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #444;
+      font-size: 12px;
+    }
+  </style>
 </head>
-
 <body>
 
-    <div class="container">
+  <div class="navbar">
+    <h1>⚡ Gold Price Predictor</h1>
+    <span>Powered by Random Forest · AWS EC2 · Docker</span>
+  </div>
 
-        <h1>Gold Price Prediction</h1>
+  <div class="container">
 
-        <p class="subtitle">
-            Predict Gold Prices using Machine Learning & AWS Deployment
-        </p>
-
-        <form action="/predict" method="POST">
-
-            <div class="input-group">
-                <label>SPX Value</label>
-                <input type="text" name="SPX" placeholder="Enter SPX value" required>
-            </div>
-
-            <div class="input-group">
-                <label>USO Value</label>
-                <input type="text" name="USO" placeholder="Enter USO value" required>
-            </div>
-
-            <div class="input-group">
-                <label>SLV Value</label>
-                <input type="text" name="SLV" placeholder="Enter SLV value" required>
-            </div>
-
-            <div class="input-group">
-                <label>EUR/USD Value</label>
-                <input type="text" name="EURUSD" placeholder="Enter EUR/USD value" required>
-            </div>
-
-            <button type="submit">Predict Gold Price</button>
-
-        </form>
-
-        {% if prediction_text %}
-        <div class="result-box">
-            {{ prediction_text }}
-        </div>
-        {% endif %}
-
-        <footer>
-            Developed by Kushal Upadhyay
-        </footer>
-
+    <!-- Metric cards -->
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="label">R² Score</div>
+        <div class="value r2-val">{{ r2 }}</div>
+        <div class="sublabel">Model accuracy</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">Mean Absolute Error</div>
+        <div class="value mae-val">${{ mae }}</div>
+        <div class="sublabel">Average prediction error</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">Mean Squared Error</div>
+        <div class="value mse-val">{{ mse }}</div>
+        <div class="sublabel">Squared error metric</div>
+      </div>
     </div>
 
-</body>
+    <!-- Prediction form -->
+    <div class="form-card">
+      <h2>Enter Market Indicators</h2>
+      <form action="/predict" method="POST">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>SPX — S&amp;P 500 Index</label>
+            <input type="number" step="any" name="SPX" placeholder="e.g. 1500.25" required/>
+          </div>
+          <div class="form-group">
+            <label>USO — US Oil Fund</label>
+            <input type="number" step="any" name="USO" placeholder="e.g. 35.12" required/>
+          </div>
+          <div class="form-group">
+            <label>SLV — Silver ETF</label>
+            <input type="number" step="any" name="SLV" placeholder="e.g. 15.30" required/>
+          </div>
+          <div class="form-group">
+            <label>EUR/USD — Exchange Rate</label>
+            <input type="number" step="any" name="EUR/USD" placeholder="e.g. 1.35" required/>
+          </div>
+        </div>
+        <button type="submit" class="predict-btn">Predict Gold Price →</button>
+      </form>
+    </div>
 
+    <!-- Result banner (only shows after prediction) -->
+    {% if prediction is not none %}
+    <div class="result-banner">
+      <div class="result-label">Predicted Gold Price (GLD ETF)</div>
+      <div class="result-value">${{ prediction }}</div>
+      <div class="result-sub">Based on your input market indicators</div>
+    </div>
+    {% endif %}
+
+    <!-- Actual vs Predicted chart -->
+    <div class="chart-card">
+      <h2>📈 Actual vs Predicted Prices — Test Dataset</h2>
+      {{ pred_graph | safe }}
+    </div>
+
+    <!-- Feature importance chart -->
+    <div class="chart-card">
+      <h2>🔍 Feature Importance — What Drives Gold Price?</h2>
+      {{ feature_graph | safe }}
+    </div>
+
+  </div>
+
+  <footer>Built by Kushal Upadhyay · Flask + Random Forest + Docker + AWS EC2</footer>
+</body>
 </html>
