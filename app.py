@@ -111,17 +111,7 @@ def predict():
 
 @app.route('/predict_api', methods=['GET'])
 def predict_api():
-
-    data = request.get_json()
-
-    spx = float(data['SPX'])
-    uso = float(data['USO'])
-    slv = float(data['SLV'])
-    eur_usd = float(data['EUR_USD'])
-
-    prediction = model.predict([[spx, uso, slv, eur_usd]])
-
-    return jsonify({
+ return jsonify({
         "message":"API working"})
     
 
