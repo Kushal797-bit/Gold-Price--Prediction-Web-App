@@ -109,7 +109,7 @@ def predict():
                            r2=r2, mae=mae, mse=mse,
                            prediction=prediction)
 
-@app.route('/predict_api', methods=['POST'])
+@app.route('/predict_api', methods=['GET'])
 def predict_api():
 
     data = request.get_json()
@@ -122,7 +122,7 @@ def predict_api():
     prediction = model.predict([[spx, uso, slv, eur_usd]])
 
     return jsonify({
-        'predicted_gold_price': float(prediction[0])
+        "message":"API working"})
     })
 
 if __name__ == '__main__':
