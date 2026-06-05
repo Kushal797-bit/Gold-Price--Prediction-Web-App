@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
 import plotly.io as pio
-from flask import Flask, render_template, request,jsonify
+from flask import Flask, render_template, request
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
@@ -109,10 +109,7 @@ def predict():
                            r2=r2, mae=mae, mse=mse,
                            prediction=prediction)
 
-@app.route('/predict_api', methods=['GET'])
-def predict_api():
- return jsonify({
-        "message":"API working"})
+
     
 
 if __name__ == '__main__':
