@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
 import plotly.io as pio
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
@@ -108,6 +108,22 @@ def predict():
                            feature_graph=feature_graph,
                            r2=r2, mae=mae, mse=mse,
                            prediction=prediction)
+
+@app.route('/predict_api', methods=['POST'])
+def predict_api():
+
+    data = request.get_json()
+
+    spx = float(data['SPX'])
+    uso = float(data['USO'])
+    slv = float(data['SLV'])
+    eur_usd = float(data['EUR_USD'])
+
+    prediction = model.predict([[spx, uso, slv, eur_usd]])
+
+    return jsonify({
+        'predicted_gold_price': float(prediction[0])
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000)
