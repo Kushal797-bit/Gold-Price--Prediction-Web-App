@@ -23,14 +23,15 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           script: |
-            cd Gold-Price--Prediction-Web-App
+          cd Gold-Price--Prediction-Web-App
 
-            git pull
+          git pull
 
-            sudo docker stop gold-container || true
+           sudo docker stop gold-container || true
+          sudo docker rm gold-container || true
 
-            sudo docker rm gold-container || true
+           sudo docker system prune -af
 
-            sudo docker build -t gold-price-app .
+          sudo docker build -t gold-price-app .
 
-            sudo docker run -d -p 5000:5000 --name gold-container gold-price-app
+          sudo docker run -d -p 5000:5000 --name gold-container --restart unless-stopped gold-price-app
